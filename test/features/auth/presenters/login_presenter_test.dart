@@ -1,3 +1,4 @@
+import 'package:flutter_demo/features/auth/domain/use_cases/log_in_use_case.dart';
 import 'package:flutter_demo/features/auth/login/login_initial_params.dart';
 import 'package:flutter_demo/features/auth/login/login_presentation_model.dart';
 import 'package:flutter_demo/features/auth/login/login_presenter.dart';
@@ -9,6 +10,7 @@ void main() {
   late LoginPresentationModel model;
   late LoginPresenter presenter;
   late MockLoginNavigator navigator;
+  late LogInUseCase useCase;
 
   test(
     'sample test',
@@ -20,8 +22,11 @@ void main() {
   setUp(() {
     model = LoginPresentationModel.initial(const LoginInitialParams());
     navigator = MockLoginNavigator();
+    useCase = MockLogInUseCase();
+
     presenter = LoginPresenter(
       model,
+      useCase,
       navigator,
     );
   });

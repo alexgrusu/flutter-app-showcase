@@ -6,15 +6,45 @@ class LoginPresentationModel implements LoginViewModel {
   LoginPresentationModel.initial(
     // ignore: avoid_unused_constructor_parameters
     LoginInitialParams initialParams,
-  );
+  )   : email = '',
+        password = '',
+        loginInProgress = false;
 
   /// Used for the copyWith method
-  LoginPresentationModel._();
+  LoginPresentationModel._({
+    required this.email,
+    required this.password,
+    required this.loginInProgress,
+  });
 
-  LoginPresentationModel copyWith() {
-    return LoginPresentationModel._();
+  final String email;
+
+  final String password;
+
+  final bool loginInProgress;
+
+  @override
+  bool get isLoginEnabled => email.isNotEmpty && password.isNotEmpty;
+
+  @override
+  bool get isAuthenticating => loginInProgress;
+
+  LoginPresentationModel copyWith({
+    String? email,
+    String? password,
+    bool? loginInProgress,
+  }) {
+    return LoginPresentationModel._(
+      email: email ?? this.email,
+      password: password ?? this.password,
+      loginInProgress: loginInProgress ?? this.loginInProgress,
+    );
   }
 }
 
 /// Interface to expose fields used by the view (page).
-abstract class LoginViewModel {}
+abstract class LoginViewModel {
+  bool get isLoginEnabled;
+
+  bool get isAuthenticating;
+}
